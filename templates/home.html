@@ -7,13 +7,15 @@
     <div class="container">
         <div class="header">
             <h1>Игра "Угадай число"</h1>
-                <form method="POST">
-                    Введите число: <input id= "userNumber" type="number" name="number">
-                </form>
-                <hr>
-                <button onclick="f1()">Загадать</button>
-            <p> {{ player_number }} </p>
-                <br><br>
+            <form method="get" action="{% url 'home' %}">
+                <h2>Загаданное число: {{ hidden_number }}</h2>
+                <p>Второй игрок будет пытаться отгадать его</p>
+            </form>
+<!--                <form method="POST" action="{% url 'home' %}">-->
+<!--                    {% csrf_token %}-->
+<!--                    {{ game_form }}-->
+<!--                    <input type="submit" value="Загадать">-->
+<!--                </form>-->
         </div>
     </div>
 {% endblock %}

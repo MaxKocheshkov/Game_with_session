@@ -1,14 +1,16 @@
+from django.contrib.sessions.models import Session
 from django.db import models
 
 
 class Player(models.Model):
-    player_id = models.ForeignKey('Game', on_delete=models.CASCADE)
-    player_number = models.IntegerField(default=None)
+    player_number = models.IntegerField(default=None, verbose_name="Введите число")
+    player_session = models.ForeignKey(Session, on_delete=models.CASCADE)
 
 
 class Game(models.Model):
-    game_id = models.IntegerField()
-    game_info = models.ManyToManyField(
+    hidden_number = models.IntegerField(default=None, verbose_name="Введите число")
+    is_finished = models.BooleanField(default=False)
+    creator = models.ManyToManyField(
         Player,
         through='PlayerGameInfo',
         through_fields=('game', 'players')
