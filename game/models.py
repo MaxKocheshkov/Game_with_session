@@ -1,10 +1,9 @@
-from django.contrib.sessions.models import Session
 from django.db import models
 
 
 class Player(models.Model):
-    player_number = models.IntegerField(default=None, verbose_name="Введите число")
-    player_session = models.ForeignKey(Session, on_delete=models.CASCADE)
+    player_number = models.IntegerField(verbose_name="Введите число", null=True)
+    player_session = models.CharField(default=None, max_length=200, verbose_name='Идентификатор сессии')
 
 
 class Game(models.Model):
@@ -23,6 +22,7 @@ class PlayerGameInfo(models.Model):
     attempts = models.ForeignKey(
         Player,
         on_delete=models.CASCADE,
-        related_name='player_game_attempts'
+        related_name='player_game_attempts',
+        null=True
     )
-    player_attempts = models.IntegerField()
+    player_attempts = models.IntegerField(default=None, verbose_name="Количество попыток", null=True)
