@@ -7,15 +7,23 @@
     <div class="container">
         <div class="header">
             <h1>Игра "Угадай число"</h1>
+            {% if not hidden_number %}
             <form method="get" action="{% url 'home' %}">
                 <h2>Загаданное число: {{ hidden_number }}</h2>
                 <p>Второй игрок будет пытаться отгадать его</p>
             </form>
-<!--                <form method="POST" action="{% url 'home' %}">-->
-<!--                    {% csrf_token %}-->
-<!--                    {{ game_form }}-->
-<!--                    <input type="submit" value="Загадать">-->
-<!--                </form>-->
+            {% else %}
+            <form method="post" action="{% url 'home' %}">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Проверить">
+                {% if player_number == hidden_number %}
+                    <h2>Вы угадали число!</h2>
+                {% elif player_number != hidden_number %}
+                    <h2>Попробуйте еще раз</h2>
+                {% endif %}
+            </form>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

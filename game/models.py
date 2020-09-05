@@ -2,12 +2,12 @@ from django.db import models
 
 
 class Player(models.Model):
-    player_number = models.IntegerField(verbose_name="Введите число", null=True)
     player_session = models.CharField(default=None, max_length=200, verbose_name='Идентификатор сессии')
 
 
 class Game(models.Model):
-    hidden_number = models.IntegerField(default=None, verbose_name="Введите число")
+    hidden_number = models.IntegerField(default=None, verbose_name="Загаданное число")
+    player_number = models.IntegerField(default=None, verbose_name="Введите число", null=True)
     is_finished = models.BooleanField(default=False)
     creator = models.ManyToManyField(
         Player,
@@ -22,7 +22,7 @@ class PlayerGameInfo(models.Model):
     attempts = models.ForeignKey(
         Player,
         on_delete=models.CASCADE,
-        related_name='player_game_attempts',
+        related_name='game_attempts',
         null=True
     )
-    player_attempts = models.IntegerField(default=None, verbose_name="Количество попыток", null=True)
+    partner_attempts = models.IntegerField(default=None, verbose_name="Количество попыток", null=True)
