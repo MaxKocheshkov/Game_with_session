@@ -17,12 +17,12 @@
                 {% csrf_token %}
                 {{ form }}
                 <input type="submit" value="Проверить">
+            </form>
                 {% if player_number == hidden_number %}
                     <h2>Вы угадали число!</h2>
                 {% elif player_number != hidden_number %}
                     <h2>Попробуйте еще раз</h2>
                 {% endif %}
-            </form>
             {% endif %}
         </div>
     </div>
