@@ -30,20 +30,17 @@ def show_home(request):
         request.session['hidden_number'] = current_game.hidden_number
         context['form'] = GameForm
 
-        if request.method == 'POST':
-            user = Player.objects.get_or_create(player_session=session_id)[1]
-            game_form = GameForm(request.POST)
-            if game_form.is_valid():
-                player_number = game_form.cleaned_data
-                player_game = Game.objects.create(player_number=player_number)
-                request.session['user'] = user.id
-                context['player_number'] = player_game.player_number
-                context['user'] = request.session.get('user', None)
-                request.session['player_game_id'] = player_game.id
-                request.session['player_number'] = player_game.player_number
-                context['form'] = GameForm
-                if context['player_number'] == context['hidden_number']:
-                    Game.objects.set(is_finished=True)
+    if request.method == 'POST':
+        game_form = GameForm(request.POST)
+        if game_form.is_valid():
+            player_game = game_form.cleaned_data.get("player_number")
+            player_number = Game.objects.create(player_number=player_game)
+            if current_game.hidden_number == player_number.player_number:
+                request.session['player_number'] = player_number.id
+                Game.objects.create(is_finished=True)
+                return HttpResponse('Вы угадали число!')
+            elif current_game.hidden_number != player_number.player_number:
+                request.session['player_number'] = player_number.id
+                return HttpResponse('Попробуйте еще раз')
 
     return render(request, 'home.html', context)
-

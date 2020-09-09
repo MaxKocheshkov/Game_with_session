@@ -6,7 +6,7 @@ class Player(models.Model):
 
 
 class Game(models.Model):
-    hidden_number = models.IntegerField(default=None, verbose_name="Загаданное число")
+    hidden_number = models.IntegerField(default=None, verbose_name="Загаданное число", null=True)
     player_number = models.IntegerField(default=None, verbose_name="Введите число", null=True)
     is_finished = models.BooleanField(default=False)
     creator = models.ManyToManyField(

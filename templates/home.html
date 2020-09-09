@@ -8,21 +8,21 @@
         <div class="header">
             <h1>Игра "Угадай число"</h1>
             {% if not hidden_number %}
-            <form method="get" action="{% url 'home' %}">
-                <h2>Загаданное число: {{ hidden_number }}</h2>
-                <p>Второй игрок будет пытаться отгадать его</p>
-            </form>
+                <form method="get" action="{% url 'home' %}">
+                    <h2>Загаданное число: {{ hidden_number }}</h2>
+                    <p>Второй игрок будет пытаться отгадать его</p>
+                </form>
             {% else %}
-            <form method="post" action="{% url 'home' %}">
-                {% csrf_token %}
-                {{ form }}
-                <input type="submit" value="Проверить">
-            </form>
-                {% if player_number == hidden_number %}
-                    <h2>Вы угадали число!</h2>
-                {% elif player_number != hidden_number %}
-                    <h2>Попробуйте еще раз</h2>
-                {% endif %}
+                <form method="post" action="{% url 'home' %}">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input type="submit" value="Проверить">
+                </form>
+<!--                {% if player_number.player_number == hidden_number.hidden_number %}-->
+<!--                    <h2>Вы угадали число!</h2>-->
+<!--                {% elif player_number.player_number != hidden_number.hidden_number %}-->
+<!--                    <h2>Попробуйте еще раз</h2>-->
+<!--                {% endif %}-->
             {% endif %}
         </div>
     </div>
